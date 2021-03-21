@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RentACar.Core\RentACar.Core.csproj" />
+    <ProjectReference Include="..\RentACar.Data\RentACar.Data.csproj" />
+  </ItemGroup>
+
 </Project>
