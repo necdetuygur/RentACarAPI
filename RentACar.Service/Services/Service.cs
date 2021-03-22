@@ -52,6 +52,7 @@ namespace RentACar.Service.Services
             _repository.RemoveRange(entity);
             _unitOfWork.Commit();
         }
+
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _repository.SingleOrDefaultAsync(predicate);

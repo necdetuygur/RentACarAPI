@@ -16,20 +16,27 @@ namespace RentACar.API.Controllers
     [ApiController]
     public class ArabasController : ControllerBase
     {
+        private readonly IDapperService<Araba> _arabaDapperService;
         private readonly IService<Araba> _arabaService;
         private readonly IMapper _mapper;
-        public ArabasController(IService<Araba> service, IMapper mapper)
+        public ArabasController(IDapperService<Araba> dapperService, IService<Araba> service, IMapper mapper)
         {
+            _arabaDapperService = dapperService;
             _arabaService = service;
             _mapper = mapper;
         }
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        //public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<Araba>>> GetAll()
         {
-            var arabas = await _arabaService.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<ArabaDto>>(arabas));
+            string sql = "SELECT * FROM Araba";
+            var result = await _arabaDapperService.QueryAsync(sql);
+            return Ok(result.ToList());
+
+            //var arabas = await _arabaService.GetAllAsync();
+            //return Ok(_mapper.Map<IEnumerable<ArabaDto>>(arabas));
         }
 
         [Authorize]
