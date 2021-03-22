@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RentACar.Core.Models
+﻿namespace RentACar.Core.Models
 {
     public class Araba
     {
@@ -16,5 +10,8 @@ namespace RentACar.Core.Models
         public string YakitTuru { get; set; }
         public string EhliyetSinifi { get; set; }
         public int KoltukSayisi { get; set; }
+        public decimal GunlukUcret { get; set; }
+        public int FirmaID { get; set; }
+        public virtual Firma Firma { get; set; }
     }
 }

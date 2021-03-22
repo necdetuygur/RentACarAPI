@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RentACar.Core.Models;
 
@@ -19,7 +18,9 @@ namespace RentACar.Data.Seeds
                     UretimYili = 1995,
                     YakitTuru = "Benzin",
                     EhliyetSinifi = "B",
-                    KoltukSayisi = 5
+                    KoltukSayisi = 5,
+                    GunlukUcret = 50,
+                    FirmaID = 1
                 },
                 new Araba
                 {
@@ -30,7 +31,9 @@ namespace RentACar.Data.Seeds
                     UretimYili = 1995,
                     YakitTuru = "Benzin",
                     EhliyetSinifi = "B",
-                    KoltukSayisi = 5
+                    KoltukSayisi = 5,
+                    GunlukUcret = 50,
+                    FirmaID = 1
                 },
                 new Araba
                 {
@@ -41,7 +44,9 @@ namespace RentACar.Data.Seeds
                     UretimYili = 1995,
                     YakitTuru = "Benzin",
                     EhliyetSinifi = "B",
-                    KoltukSayisi = 5
+                    KoltukSayisi = 5,
+                    GunlukUcret = 50,
+                    FirmaID = 1
                 }
             );
         }

@@ -29,13 +29,11 @@ namespace RentACar.Service.Services
             await _repository.AddRangeAsync(entities);
             await _unitOfWork.CommitAsync();
             return entities;
-
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
-
         }
 
         public async Task<TEntity> GetByIdAsync(int id)
@@ -53,7 +51,6 @@ namespace RentACar.Service.Services
         {
             _repository.RemoveRange(entity);
             _unitOfWork.Commit();
-
         }
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
