@@ -11,6 +11,7 @@ namespace RentACar.Data.Configurations
             builder.HasKey(x => x.ArabaID);
             builder.Property(x => x.ArabaID).UseIdentityColumn();
             builder.Property(x => x.Plaka).IsRequired();
+            builder.Property(x => x.GunlukUcret).HasColumnType("decimal");
             builder.ToTable("Araba");
         }
     }

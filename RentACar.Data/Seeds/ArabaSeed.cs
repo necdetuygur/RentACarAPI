@@ -25,28 +25,41 @@ namespace RentACar.Data.Seeds
                 new Araba
                 {
                     ArabaID = 2,
-                    Plaka = "43HD102",
-                    Marka = "Tofaş",
-                    Model = "Şahin",
-                    UretimYili = 1995,
-                    YakitTuru = "Benzin",
+                    Plaka = "34FP8146",
+                    Marka = "Wolksvagen",
+                    Model = "Polo",
+                    UretimYili = 2012,
+                    YakitTuru = "Dizel",
                     EhliyetSinifi = "B",
                     KoltukSayisi = 5,
-                    GunlukUcret = 50,
-                    FirmaID = 1
+                    GunlukUcret = 150,
+                    FirmaID = 2
                 },
                 new Araba
                 {
                     ArabaID = 3,
-                    Plaka = "43HD103",
+                    Plaka = "35EHT84",
                     Marka = "Tofaş",
-                    Model = "Kartal",
-                    UretimYili = 1995,
+                    Model = "Şahin",
+                    UretimYili = 2000,
                     YakitTuru = "Benzin",
                     EhliyetSinifi = "B",
                     KoltukSayisi = 5,
-                    GunlukUcret = 50,
-                    FirmaID = 1
+                    GunlukUcret = 75,
+                    FirmaID = 3
+                },
+                new Araba
+                {
+                    ArabaID = 4,
+                    Plaka = "35FST17",
+                    Marka = "BMV",
+                    Model = "1.16",
+                    UretimYili = 2016,
+                    YakitTuru = "Dizel",
+                    EhliyetSinifi = "B",
+                    KoltukSayisi = 5,
+                    GunlukUcret = 200,
+                    FirmaID = 2
                 }
             );
         }
