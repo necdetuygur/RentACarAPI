@@ -31,12 +31,8 @@ namespace RentACar.API.Controllers
         //public async Task<IActionResult> GetAll()
         public async Task<ActionResult<IEnumerable<Araba>>> GetAll()
         {
-            string sql = "SELECT * FROM Araba";
-            var result = await _arabaDapperService.QueryAsync(sql);
-            return Ok(result.ToList());
-
-            //var arabas = await _arabaService.GetAllAsync();
-            //return Ok(_mapper.Map<IEnumerable<ArabaDto>>(arabas));
+            var arabas = await _arabaService.GetAllAsync();
+            return Ok(_mapper.Map<IEnumerable<ArabaDto>>(arabas));
         }
 
         [Authorize]
