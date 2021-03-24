@@ -10,6 +10,12 @@ namespace RentACar.API.Mapping
         {
             CreateMap<Araba, ArabaDto>();
             CreateMap<ArabaDto, Araba>();
+
+            CreateMap<Alici, AliciDto>();
+            CreateMap<AliciDto, Alici>();
+
+            CreateMap<Firma, FirmaDto>();
+            CreateMap<FirmaDto, Firma>();
         }
     }
 }
