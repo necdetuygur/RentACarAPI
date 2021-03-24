@@ -28,8 +28,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpGet]
-        //public async Task<IActionResult> GetAll()
-        public async Task<ActionResult<IEnumerable<Araba>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var arabas = await _arabaService.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<ArabaDto>>(arabas));
