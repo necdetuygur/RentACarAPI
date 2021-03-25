@@ -17,9 +17,9 @@ namespace RentACar.API.Controllers
     {
         private readonly IDapperService<Firma> _dapperService;
         private readonly IMapper _mapper;
-        public FirmasController(IDapperService<Firma> DapperService, IMapper mapper)
+        public FirmasController(IDapperService<Firma> dapperService, IMapper mapper)
         {
-            _dapperService = DapperService;
+            _dapperService = dapperService;
             _mapper = mapper;
         }
 

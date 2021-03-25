@@ -17,9 +17,9 @@ namespace RentACar.API.Controllers
     {
         private readonly IDapperService<Kiralama> _dapperService;
         private readonly IMapper _mapper;
-        public KiralamasController(IDapperService<Kiralama> DapperService, IMapper mapper)
+        public KiralamasController(IDapperService<Kiralama> dapperService, IMapper mapper)
         {
-            _dapperService = DapperService;
+            _dapperService = dapperService;
             _mapper = mapper;
         }
 
