@@ -16,6 +16,9 @@ namespace RentACar.API.Mapping
 
             CreateMap<Firma, FirmaDto>();
             CreateMap<FirmaDto, Firma>();
+
+            CreateMap<Kiralama, KiralamaDto>();
+            CreateMap<KiralamaDto, Kiralama>();
         }
     }
 }
