@@ -7,6 +7,7 @@ using RentACar.Core.Services;
 using RentACar.Service.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RentACar.API.Controllers
@@ -16,21 +17,28 @@ namespace RentACar.API.Controllers
     public class FirmasController : ControllerBase
     {
         private readonly IDapperService<Firma> _dapperService;
+        private readonly IDapperService<Araba> _dapperArabaService;
         private readonly IMapper _mapper;
-        public FirmasController(IDapperService<Firma> dapperService, IMapper mapper)
+        public FirmasController(IDapperService<Firma> dapperService, IMapper mapper,IDapperService<Araba> dapperArabaservice)
         {
             _dapperService = dapperService;
+            _dapperArabaService = dapperArabaservice;
             _mapper = mapper;
         }
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FirmaDto>>> GetAll()
+        public async Task<ActionResult<List<FirmaDto>>> GetAll()
         {
             try
             {
-                var firmas = await _dapperService.QueryAsync("SELECT * FROM Firma");
-                return Ok(_mapper.Map<IEnumerable<FirmaDto>>(firmas));
+                var firmas = (await _dapperService.QueryAsync("SELECT * FROM Firma")).ToList();
+                foreach (Firma firma in firmas)
+                {
+                    var arabas = (await _dapperArabaService.QueryAsync($"SELECT * FROM Araba WHERE FirmaID = {firma.FirmaID}")).ToList();
+                    firma.Arabas = arabas;
+                }
+                return Ok(firmas);
             }
             catch (Exception ex)
             {
