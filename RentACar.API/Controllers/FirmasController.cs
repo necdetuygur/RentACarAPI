@@ -25,7 +25,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Firma>>> GetAll()
+        public async Task<ActionResult<IEnumerable<FirmaDto>>> GetAll()
         {
             try
             {

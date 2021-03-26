@@ -25,7 +25,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Kiralama>>> GetAll()
+        public async Task<ActionResult<IEnumerable<KiralamaDto>>> GetAll()
         {
             try
             {
