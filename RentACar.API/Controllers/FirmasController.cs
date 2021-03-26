@@ -5,6 +5,7 @@ using RentACar.API.DTOs;
 using RentACar.Core.Models;
 using RentACar.Core.Services;
 using RentACar.Service.Services;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace RentACar.API.Controllers
         private readonly IDapperService<Firma> _dapperService;
         private readonly IDapperService<Araba> _dapperArabaService;
         private readonly IMapper _mapper;
-        public FirmasController(IDapperService<Firma> dapperService, IMapper mapper,IDapperService<Araba> dapperArabaservice)
+        public FirmasController(IDapperService<Firma> dapperService, IMapper mapper, IDapperService<Araba> dapperArabaservice)
         {
             _dapperService = dapperService;
             _dapperArabaService = dapperArabaservice;
@@ -28,6 +29,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpGet]
+        [SwaggerOperation(Summary = "Firma ve firmaya bağlı arabaları verir.", Description = "Firma ve firmaya bağlı arabaları verir.")]
         public async Task<ActionResult<List<FirmaDto>>> GetAll()
         {
             try

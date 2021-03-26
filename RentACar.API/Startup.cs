@@ -56,6 +56,7 @@ namespace RentACar.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RentACar.API", Version = "v1" });
+                c.EnableAnnotations();
                 #region Auth
                 c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
                 {
