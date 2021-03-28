@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RentACar.API.DTOs;
 using RentACar.Core.Models;
 using RentACar.Core.Services;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -25,6 +26,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpGet]
+        [SwaggerOperation(Summary = "Alıcı bilgilerinin tümünü verir.", Description = "Alıcı bilgilerinin tümünü verir.")]
         public async Task<IActionResult> GetAll()
         {
             var alicis = await _aliciService.GetAllAsync();
@@ -33,6 +35,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Kullanıcı tarafından verilen id'ye göre alıcı bilgisini verir.", Description = "Kullanıcı tarafından verilen id'ye göre alıcı bilgisini verir.")]
         public async Task<IActionResult> GetById(int id)
         {
             var alici = await _aliciService.GetByIdAsync(id);
@@ -41,6 +44,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpPost]
+        [SwaggerOperation(Summary = "Kullanıcı tarafından girilen bilgilere göre alıcı bilgilerini kaydeder.", Description = "Kullanıcı tarafından girilen bilgilere göre alıcı bilgilerini kaydeder.")]
         public async Task<IActionResult> Save(AliciDto aliciDto)
         {
             var Alici = await _aliciService.AddAsync(_mapper.Map<Alici>(aliciDto));
@@ -49,6 +53,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpPut]
+        [SwaggerOperation(Summary = "Kullanıcı tarafından girilen bilgilere göre alıcı bilgilerini günceller.", Description = "Kullanıcı tarafından girilen bilgilere göre alıcı bilgilerini günceller.")]
         public IActionResult Update(AliciDto aliciDto)
         {
             var Alici = _aliciService.Update(_mapper.Map<Alici>(aliciDto));
@@ -57,6 +62,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Kullanıcı tarafından girilen alıcı id'ye göre seçilen arabayı siler.", Description = "Kullanıcı tarafından girilen alıcı id'ye göre seçilen arabayı siler.")]
         public IActionResult Remove(int id)
         {
             var alici = _aliciService.GetByIdAsync(id).Result;

@@ -17,13 +17,13 @@ namespace RentACar.API.Controllers
     [ApiController]
     public class FirmasController : ControllerBase
     {
-        private readonly IDapperService<Firma> _dapperService;
+        private readonly IDapperService<Firma> _dapperFirmaService;
         private readonly IDapperService<Araba> _dapperArabaService;
         private readonly IMapper _mapper;
-        public FirmasController(IDapperService<Firma> dapperService, IMapper mapper, IDapperService<Araba> dapperArabaservice)
+        public FirmasController(IDapperService<Firma> dapperFirmaService, IDapperService<Araba> dapperArabaService, IMapper mapper)
         {
-            _dapperService = dapperService;
-            _dapperArabaService = dapperArabaservice;
+            _dapperFirmaService = dapperFirmaService;
+            _dapperArabaService = dapperArabaService;
             _mapper = mapper;
         }
 
@@ -34,7 +34,7 @@ namespace RentACar.API.Controllers
         {
             try
             {
-                var firmas = (await _dapperService.QueryAsync("SELECT * FROM Firma")).ToList();
+                var firmas = (await _dapperFirmaService.QueryAsync("SELECT * FROM Firma")).ToList();
                 foreach (Firma firma in firmas)
                 {
                     var arabas = (await _dapperArabaService.QueryAsync($"SELECT * FROM Araba WHERE FirmaID = {firma.FirmaID}")).ToList();
@@ -50,12 +50,15 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Firma ve firmaya bağlı arabaları kullanıcı tarafından verilen id'ye göre verir.", Description = "Firma ve firmaya bağlı arabaları kullanıcı tarafından verilen id'ye göre verir.")]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                var firma = await _dapperService.QueryFirstAsync($"SELECT * FROM Firma WHERE FirmaID = {id}");
-                return Ok(_mapper.Map<FirmaDto>(firma));
+                var firma = await _dapperFirmaService.QueryFirstAsync($"SELECT * FROM Firma WHERE FirmaID = {id}");
+                var araba = (await _dapperArabaService.QueryAsync($"SELECT * FROM Araba WHERE FirmaID = {firma.FirmaID}")).ToList();
+                firma.Arabas = araba;
+                return Ok(firma);
             }
             catch (Exception ex)
             {
@@ -65,6 +68,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpPost]
+        [SwaggerOperation(Summary = "Kullanıcı tarafından girilen bilgilere göre firma bilgilerini kaydeder.", Description = "Kullanıcı tarafından girilen bilgilere göre firma bilgilerini kaydeder.")]
         public async Task<IActionResult> Save(FirmaDto firmaDto)
         {
             try
@@ -84,7 +88,7 @@ namespace RentACar.API.Controllers
                     Adres = firmaDto.Adres,
                     VergiNo = firmaDto.VergiNo
                 };
-                await _dapperService.ExecuteAsync(sql, param);
+                await _dapperFirmaService.ExecuteAsync(sql, param);
                 return Ok();
             }
             catch (Exception ex)
@@ -95,6 +99,7 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpPut]
+        [SwaggerOperation(Summary = "Kullanıcı tarafından girilen bilgilere göre firma bilgilerini günceller.", Description = "Kullanıcı tarafından girilen bilgilere göre firma bilgilerini günceller.")]
         public IActionResult Update(FirmaDto firmaDto)
         {
             try
@@ -120,7 +125,7 @@ namespace RentACar.API.Controllers
                     Adres = firmaDto.Adres,
                     VergiNo = firmaDto.VergiNo
                 };
-                _dapperService.Execute(sql, param);
+                _dapperFirmaService.Execute(sql, param);
                 return Ok();
             }
             catch (Exception ex)
@@ -131,11 +136,12 @@ namespace RentACar.API.Controllers
 
         [Authorize]
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Kullanıcı tarafından girilen firma id'ye göre seçilen firmayı siler.", Description = "Kullanıcı tarafından girilen firma id'ye göre seçilen firmayı siler.")]
         public IActionResult Remove(int id)
         {
             try
             {
-                _dapperService.QueryAsync($"DELETE FROM Firma WHERE FirmaID = {id}");
+                _dapperFirmaService.QueryAsync($"DELETE FROM Firma WHERE FirmaID = {id}");
                 return Ok();
             }
             catch (Exception ex)
