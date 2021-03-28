@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using RentACar.API.DTOs;
 using RentACar.Core.Models;
 using RentACar.Core.Services;
-using RentACar.Service.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,13 +18,11 @@ namespace RentACar.API.Controllers
         private readonly IDapperService<Kiralama> _dapperKiralamaService;
         private readonly IDapperService<Araba> _dapperArabaService;
         private readonly IDapperService<Alici> _dapperAliciService;
-        private readonly IMapper _mapper;
-        public KiralamasController(IDapperService<Kiralama> dapperKiralamaService, IDapperService<Araba> dapperArabaService, IDapperService<Alici> dapperAliciService, IMapper mapper)
+        public KiralamasController(IDapperService<Kiralama> dapperKiralamaService, IDapperService<Araba> dapperArabaService, IDapperService<Alici> dapperAliciService)
         {
             _dapperKiralamaService = dapperKiralamaService;
             _dapperArabaService = dapperArabaService;
             _dapperAliciService = dapperAliciService;
-            _mapper = mapper;
         }
 
         [Authorize]
