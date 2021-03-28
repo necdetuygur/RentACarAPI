@@ -14,12 +14,10 @@ namespace RentACar.API.Controllers
     [ApiController]
     public class AlicisController : ControllerBase
     {
-        private readonly IDapperService<Alici> _aliciDapperService;
         private readonly IService<Alici> _aliciService;
         private readonly IMapper _mapper;
-        public AlicisController(IDapperService<Alici> dapperService, IService<Alici> service, IMapper mapper)
+        public AlicisController(IService<Alici> service, IMapper mapper)
         {
-            _aliciDapperService = dapperService;
             _aliciService = service;
             _mapper = mapper;
         }
