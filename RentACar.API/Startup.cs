@@ -86,6 +86,13 @@ namespace RentACar.API
             #region Auth
             services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
             #endregion
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,6 +119,8 @@ namespace RentACar.API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors("MyPolicy");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using RentACar.API.DTOs;
 using RentACar.Core.Models;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.API.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class ArabasController : ControllerBase
