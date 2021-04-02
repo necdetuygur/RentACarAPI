@@ -45,6 +45,10 @@ namespace RentACar.API
             services.AddScoped(typeof(IDapperRepository<>), typeof(DapperRepository<>));
             services.AddScoped<IDapperUnitOfWork, DapperUnitOfWork>();
 
+
+            services.AddScoped(typeof(Data.Tablolar.RentACarDBContext));
+            services.AddDbContext<Data.Tablolar.RentACarDBContext>();
+
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:SqlConnectionString"].ToString(), o =>

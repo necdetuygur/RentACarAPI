@@ -6,6 +6,7 @@ using RentACar.Core.Models;
 using RentACar.Core.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RentACar.API.Controllers
@@ -14,10 +15,13 @@ namespace RentACar.API.Controllers
     [ApiController]
     public class AlicisController : ControllerBase
     {
+
+        private readonly RentACar.Data.Tablolar.RentACarDBContext _rentACarDBContext;
         private readonly IService<Alici> _aliciService;
         private readonly IMapper _mapper;
-        public AlicisController(IService<Alici> service, IMapper mapper)
+        public AlicisController(IService<Alici> service, IMapper mapper, RentACar.Data.Tablolar.RentACarDBContext rentACarDBContext)
         {
+            _rentACarDBContext = rentACarDBContext;
             _aliciService = service;
             _mapper = mapper;
         }
@@ -27,8 +31,14 @@ namespace RentACar.API.Controllers
         [SwaggerOperation(Summary = "Alıcı bilgilerinin tümünü verir.", Description = "Alıcı bilgilerinin tümünü verir.")]
         public async Task<IActionResult> GetAll()
         {
-            var alicis = await _aliciService.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<AliciDto>>(alicis));
+
+
+
+            return Ok(_rentACarDBContext.Alicis.ToList());
+
+
+            // var alicis = await _aliciService.GetAllAsync();
+            // return Ok(_mapper.Map<IEnumerable<AliciDto>>(alicis));
         }
 
         [Authorize]
@@ -45,8 +55,11 @@ namespace RentACar.API.Controllers
         [SwaggerOperation(Summary = "Kullanıcı tarafından girilen bilgilere göre alıcı bilgilerini kaydeder.", Description = "Kullanıcı tarafından girilen bilgilere göre alıcı bilgilerini kaydeder.")]
         public async Task<IActionResult> Save(AliciDto aliciDto)
         {
-            var Alici = await _aliciService.AddAsync(_mapper.Map<Alici>(aliciDto));
-            return Created(string.Empty, _mapper.Map<AliciDto>(Alici));
+            Data.Tablolar.Alici alici = _mapper.Map<Data.Tablolar.Alici>(aliciDto);
+            return Ok(await _rentACarDBContext.Alicis.AddAsync(alici));
+
+            //var Alici = await _aliciService.AddAsync(_mapper.Map<Alici>(aliciDto));
+            //return Created(string.Empty, _mapper.Map<AliciDto>(Alici));
         }
 
         [Authorize]

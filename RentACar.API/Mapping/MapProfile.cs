@@ -19,6 +19,9 @@ namespace RentACar.API.Mapping
 
             CreateMap<Kiralama, KiralamaDto>();
             CreateMap<KiralamaDto, Kiralama>();
+
+            CreateMap<Data.Tablolar.Alici, AliciDto>();
+            CreateMap<AliciDto, Data.Tablolar.Alici>();
         }
     }
 }
