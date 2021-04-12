@@ -1,14 +1,20 @@
+using HealthChecks.UI.Client;
+using HealthChecks.UI.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using RentACar.API.Auth;
 using RentACar.Core.Repositories;
 using RentACar.Core.Services;
@@ -53,6 +59,20 @@ namespace RentACar.API
                 });
             });
             services.AddControllers();
+
+            #region HealthCheck
+            services.AddHealthChecks()
+                .AddSqlServer(
+                    Configuration.GetConnectionString("SqlConnectionString"),
+                    "SELECT 1;",
+                    "Veritabani",
+                    HealthStatus.Degraded,
+                    timeout: TimeSpan.FromSeconds(30),
+                    tags: new[] { "db", "sql", "sqlServer", });
+
+            services.AddHealthChecksUI().AddInMemoryStorage();
+            #endregion
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RentACar.API", Version = "v1" });
@@ -108,10 +128,18 @@ namespace RentACar.API
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            #region HealthCheck
+            app.UseHealthChecks("/hc-api", new HealthCheckOptions
             {
-                endpoints.MapControllers();
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
+
+            app.UseHealthChecksUI(options =>
+            {
+                options.UIPath = "/hc";
+            });
+            #endregion
         }
     }
 }
